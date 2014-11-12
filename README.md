@@ -14,6 +14,10 @@ ansible-playbook jira.yml --extra-vars=/path/to/file_vars
 
 - [1. QuickStart](#1-quickstart)
 - [2. Overview](#2-overview)
+- [3. Requirements](#3-requirements)
+- [4. Usage](#4-usage)
+  - [4.1 Playbook Arguments](#41-playbook-arguments)
+- [5. After Install](#5-after-install)
 
 
 ## 2. Overview
@@ -96,8 +100,3 @@ systemctl start jira.service
 
 
 Enjoy
-
-
-
-
-
