@@ -1,14 +1,15 @@
 ---
 galaxy_ifo:
   author: "Fauzi Gomez"
-  company: "N/A"
+  description: "An Ansible playbook to automate the installation of Atlassian Jira, could posibly be used to keep it updated"
+  documentation_url: https://github.com/fauzigo/ansible-jira/blob/master/README.md
   license: BSD
   min_ansible_version: 1.4
   platforms:
-   - name: EL
-     versions:
-      - 6 
-      - 7
+    - name: EL
+      versions:
+        - 6 
+        - 7
   categories:
    - development
 dependencies: []
