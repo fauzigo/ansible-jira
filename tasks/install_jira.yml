@@ -1,0 +1,38 @@
+---
+
+# Start installing and configuring jira
+#- name: Directory needed before creating JIRA stuff
+#  file: path=/str state=directory mode=0755
+
+- name: Jira groups
+  group: name={{ jira_user_group }} gid={{ jira_user_group_gid }}
+
+- name: Default JIRA user and home
+  user: name={{ jira_user }} shell=/bin/bash group={{ jira_user_group }} uid={{ jira_user_uid }} home={{ jira_user_home_dir }}
+
+- name: Download the Source
+  get_url: url=http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-{{ jira_version }}.tar.gz sha256sum={{ jira_version_file_sha256sum }} dest={{ jira_user_home_dir }}/atlassian-jira-{{ jira_version }}.tar.gz
+
+- stat: path={{ jira_user_home_dir }}/atlassian-jira-{{ jira_version }}-standalone
+  register: st
+
+- name: Extrat the sources
+  unarchive: src={{ jira_user_home_dir }}/atlassian-jira-{{ jira_version }}.tar.gz dest={{ jira_user_home_dir }} copy=no
+  when: not st.stat.exists
+
+- name: Make the directory easier to reach
+  file: src={{ jira_user_home_dir }}/atlassian-jira-{{ jira_version }}-standalone dest={{ jira_user_home_dir }}/jira owner={{ jira_user }} group={{ jira_user_group }} state=link
+
+- name: Create jira-home dir
+  file: path={{ jira_home }} state=directory owner={{ jira_user }} group={{ jira_user_group }} 
+
+- name: Set the home dir inside the configs
+  template: src=jira-application.properties.j2 dest={{ jira_user_home_dir }}/jira/atlassian-jira/WEB-INF/classes/jira-application.properties owner={{ jira_user }} group={{ jira_user_group }} mode=0644
+
+- name: Copy the service script
+  template: src=jira.service.j2 dest=/usr/lib/systemd/system/jira.service
+  when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int == 7
+
+- name: Copy the init.d script
+  template: src=jira.js dest=/etc/init.d/jira
+  when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int == 6

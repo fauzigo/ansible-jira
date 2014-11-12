@@ -1,0 +1,14 @@
+[Unit]
+Description=Atlassian Jira Service
+After=syslog.target network.target
+   
+[Service]
+Type=forking
+User=isuser
+Group=isuser
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.71-2.5.3.1.el7_0.x86_64
+ExecStart={{ jira_user_home_dir }}/jira//bin/start-jira.sh
+ExecStop={{ jira_user_home_dir }}/jira/bin/stop-jira.sh
+   
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# RUN_AS: The user to run jira as
+RUN_AS={{ jira_user }}
+
+# JIRA Linux service controller script
+JIRA_HOME={{ jira_user_home_dir }}/jira/bin
+
+jiractl() {
+        op=$1
+        if [ "x$USER" != "x$RUN_AS" ]; then
+                su - "$RUN_AS" -c "cd $JIRA_HOME; ./${op}-jira.sh"
+        else
+                cd $JIRA_HOME
+                ./${op}-jira.sh
+        fi
+}
+
+case "$1" in
+        start)
+                jiractl start
+                ;;
+        stop)
+                jiractl stop
+                ;;
+        restart)
+                jiractl stop
+                sleep 10
+                jiractl start
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart}"
+esac
+
+exit 0

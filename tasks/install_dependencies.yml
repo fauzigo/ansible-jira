@@ -1,0 +1,9 @@
+
+# Only Dependencies
+
+# Install Dependencies
+
+- name: Dependencies for JIRA
+  yum: name={{ item }} state=installed
+  with_items:
+   - java-1.7.0-openjdk-devel
