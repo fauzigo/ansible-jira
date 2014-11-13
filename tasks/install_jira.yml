@@ -11,7 +11,7 @@
   user: name={{ jira_user }} shell=/bin/bash group={{ jira_user_group }} uid={{ jira_user_uid }} home={{ jira_user_home_dir }}
 
 - name: Download the Source
-  get_url: url=http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-{{ jira_version }}.tar.gz sha256sum={{ jira_version_file_sha256sum }} dest={{ jira_user_home_dir }}/atlassian-jira-{{ jira_version }}.tar.gz
+  get_url: url={{ jira_download_link }}-{{ jira_version }}.tar.gz sha256sum={{ jira_version_file_sha256sum }} dest={{ jira_user_home_dir }}/atlassian-jira-{{ jira_version }}.tar.gz
 
 - stat: path={{ jira_user_home_dir }}/atlassian-jira-{{ jira_version }}-standalone
   register: st

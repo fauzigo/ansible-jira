@@ -73,13 +73,14 @@ ansible-playbook jira.yml --extra-vars=/path/to/file_var
 - jira_home: jira-home path, if it's the first time installation use whereever you like, otherwise use your current
 - jira_version: the version check latest in atlassian site
 - jira_version_file_sha256sum: you should have this 
+- jira_download_link: link to download the .tar.gz file (note: it will be concatenated with the version var)
 
 **TODO**: make gid, uid and sha256sum optional
 
 Example:
 
 ```
-ansible-playbook jira.yml --extra-vars 'jira_user_group=jira jira_user_group_gid=1000 jira_user=jira jira_user_uid=1000 jira_user_home_dir=/opt jira_home=/var/jira jira_version=6.3.9 jira_version_file_sha256sum=5ba3496347d78383e0201a80ecd0bafa9b6a2ea1e4841f4d843c1369d21da9a9'
+ansible-playbook jira.yml --extra-vars 'jira_user_group=jira jira_user_group_gid=1000 jira_user=jira jira_user_uid=1000 jira_user_home_dir=/opt jira_home=/var/jira jira_download_link="http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira" jira_version=6.3.9 jira_version_file_sha256sum=5ba3496347d78383e0201a80ecd0bafa9b6a2ea1e4841f4d843c1369d21da9a9'
 ```
 
 **TODO** use the handler after install to run the application
